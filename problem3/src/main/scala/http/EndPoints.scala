@@ -20,17 +20,12 @@ private final class EndPoints[F[_]: Sync] private(logic: StreamLogic[F]) extends
 
   def readiness: HttpRoutes[F] = HttpRoutes.of {
     case GET -> Root / "status" =>
-      //Here, the only precondition is to be able to write on the disk but
-      //we all know... time = money
-      Ok("Honestly I think I have done enough to show you I know my way around this.")
+      Ok(":)")
   }
 
   def healthCheck: HttpRoutes[F] = HttpRoutes.of {
     case GET -> Root / "healthcheck" =>
-      //Some metrics and of course more information on how this service is doing
-      // time = $
-      Ok("I wonder why you asked me a question about definition of a case class " +
-        "but not a single question regarding TDD or DDD!")
+      Ok(":))")
   }
 
   def streamFile: HttpRoutes[F] = HttpRoutes.of {

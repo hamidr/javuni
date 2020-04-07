@@ -61,6 +61,6 @@ object StreamLogic {
       }
     }.map(DigestedText.fromMap)
 
-    stream.through(segmentProcess) //no parallel processing because im not getting paid for this
+    stream.through(segmentProcess) //no parallel processing because this is a test assignment
   }
 }
