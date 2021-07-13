@@ -11,7 +11,7 @@ It's obvious the performance wise, it would have been much better to compute the
 and avoid the network I/O.
 
 Two endpoints:
-1. `POST /devices'
+1. `POST /devices`
 with following payload sample as an example, a unique ID of that device and state of sensors with Double value
 ```
 {
@@ -22,7 +22,7 @@ with following payload sample as an example, a unique ID of that device and stat
 }
 ```
 
-1. `GET /devices/stats'
+1. `GET /devices/stats`
 with following payload sample, however unconventional as a GET request.
 With `from` and `to` as a date range to compute, and sensors to compute and operations to ask for.
 ```
@@ -43,8 +43,9 @@ bash ./install.sh
 ```
 
 # Test/Build
-```
 There is a file called `build.sh` to test and build the universally packaged APP and unzip it for use.
+```
+bash ./build.sh
 ```
 
 # Database choice
@@ -68,3 +69,14 @@ bash run_with_cassandra.sh
 ```
 bash run.sh
 ```
+
+# Device simulation 
+I wrote another application in Scala 3 to generate/simulate the devices and their state periodically.
+Refer to `iot_device`
+
+# Query stats (Max, Min, Median, Average)
+```
+watch bash ./query.sh
+```
+
+

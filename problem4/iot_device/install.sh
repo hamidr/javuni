@@ -12,7 +12,3 @@ export PATH="/home/$USER/.local/share/coursier/bin:$PATH"
 
 #install sbt
 ./cs install sbt
-
-#compile and build the project
-sbt universal:packageBin
-unzip ./target/universal/iot_device-0.1.zip -d ./bin
