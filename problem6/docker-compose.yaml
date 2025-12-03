@@ -1,0 +1,51 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgis/postgis:17-3.5
+    container_name: postgres-dckr
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: ${DB_TIMEZONE}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    ports:
+      - "${API_PORT}:${API_PORT}"
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+    depends_on:
+      - postgres
+      - migrate
+    restart: unless-stopped
+    command: [ "./rest-api/main" ]
+
+
+  migrate:
+    image: migrate/migrate:latest
+    container_name: migrate
+    depends_on:
+      - postgres
+    volumes:
+      - ./migrations:/migrations
+    entrypoint:
+      [
+        "sh",
+        "-c",
+        "echo 'Waiting for DB...'; \
+         sleep 5; \
+         migrate -verbose -path=/migrations -database postgres://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?sslmode=${DB_SSLMODE}\\&timezone=${DB_TIMEZONE} up"
+      ]
+    restart: on-failure
+
+volumes:
+  pgdata:
